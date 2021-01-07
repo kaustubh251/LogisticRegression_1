@@ -1,6 +1,7 @@
 import matplotlib as mplot
 import numpy as npy
 import statistics as stats
+import pygal as pyg
 file = open("ex2data1.txt","rt")
 data = file.read()
 data1 = data.split()
@@ -55,6 +56,25 @@ def gradDescent(theta, x, y, alpha, maxIter):
         theta = theta1
     return theta
 
+def accuracy(theta_Final, x, y):
+    p = 0
+    q = 0
+    for i in range(len(x)):
+        x1 = x[i][:]
+        z = Z(theta_Final, x1)
+        h = H(z)
+        if h>=0.5:
+            p += 1
+        if y[i]==1:
+            q += 1
+    print(p)
+    print(q)
+    if p>=q:
+        accuracy = float(q)*100/float(p)
+    else:
+        accuracy = float(p)*100/float(q)
+    return accuracy
+
 print("Enter 3 parameters one by one:")
 init_Theta = []
 init_Theta.append(float(input()))
@@ -73,3 +93,5 @@ z = Z(theta_Final, init_Datapoint)
 h = H(z)
 print("The probability of student to get admission in the college is:")
 print(h)
+print("The accuracy of the learning algorithm is:")
+print(accuracy(theta_Final, x, y))
