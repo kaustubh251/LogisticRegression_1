@@ -57,22 +57,19 @@ def gradDescent(theta, x, y, alpha, maxIter):
     return theta
 
 def accuracy(theta_Final, x, y):
-    p = 0
     q = 0
+    p = []
     for i in range(len(x)):
         x1 = x[i][:]
         z = Z(theta_Final, x1)
         h = H(z)
         if h>=0.5:
-            p += 1
-        if y[i]==1:
+            p.insert(i, 1)
+        if h<0.5:
+            p.insert(i, 0)
+        if y[i]==p[i]:
             q += 1
-    print(p)
-    print(q)
-    if p>=q:
-        accuracy = float(q)*100/float(p)
-    else:
-        accuracy = float(p)*100/float(q)
+    accuracy = q*100/len(y)
     return accuracy
 
 print("Enter 3 parameters one by one:")
